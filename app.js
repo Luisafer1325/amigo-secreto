@@ -34,41 +34,21 @@ function actualizarLista() {
     });
 }
 
-// 4. Función para sortear amigos secretos
+// 4. Función para sortear un solo amigo al azar
 function sortearAmigo() {
-    if (listaDeAmigos.length < 2) {
-        alert("Debe haber al menos dos amigos para hacer el sorteo.");
+    if (listaDeAmigos.length === 0) {
+        alert("La lista está vacía. Agrega al menos un amigo.");
         return;
     }
 
-    // Clonar el array para asignaciones
-    let asignaciones = [...listaDeAmigos];
+    // Escoge un nombre aleatorio de la lista
+    const indice = Math.floor(Math.random() * listaDeAmigos.length);
+    const nombreSorteado = listaDeAmigos[indice];
 
-    // Función para mezclar el array
-    function mezclar(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
-    asignaciones = mezclar(asignaciones);
-
-    // Validar que nadie se asigne a sí mismo
-    for (let i = 0; i < listaDeAmigos.length; i++) {
-        if (listaDeAmigos[i] === asignaciones[i]) {
-            return sortearAmigo(); // Reiniciar si alguien se asignó a sí mismo
-        }
-    }
-
-    // Mostrar resultado
+    // Mostrar el resultado
     const ulResultado = document.getElementById("resultado");
-    ulResultado.innerHTML = "";
-    for (let i = 0; i < listaDeAmigos.length; i++) {
-        const li = document.createElement("li");
-        li.textContent = `${listaDeAmigos[i]} → ${asignaciones[i]}`;
-        ulResultado.appendChild(li);
-    }
+    ulResultado.innerHTML = ""; // Limpiar antes
+    const li = document.createElement("li");
+    li.textContent = nombreSorteado;
+    ulResultado.appendChild(li);
 }
-
